@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	SimpleAlgorithm  = "simple"
-	GCRAAlgorithm    = "gcra"
-	DefaultKeyPrefix = "http_limiter"
+	SlidingWindowAlgorithm = go_limiter.SlidingWindowAlgorithm
+	GCRAAlgorithm          = go_limiter.GCRAAlgorithm
+	DefaultKeyPrefix       = "http_limiter"
 )
 
 var (
@@ -24,7 +24,7 @@ var (
 		Max:        10,
 		Burst:      10,
 		Prefix:     DefaultKeyPrefix,
-		Algorithm:  SimpleAlgorithm,
+		Algorithm:  SlidingWindowAlgorithm,
 		StatusCode: http.StatusTooManyRequests,
 		Message:    "Too many requests, please try again later.",
 		Period:     time.Minute,
@@ -58,8 +58,8 @@ type (
 		Message string
 
 		// Algorithm
-		// Default: simple
-		Algorithm string
+		// Default: sliding window
+		Algorithm uint
 
 		// Prefix
 		// Default: http_limiter
@@ -127,7 +127,7 @@ func NewWithConfig(config Config) func(http.Handler) http.Handler {
 		config.Message = DefaultConfig.Message
 	}
 
-	if config.Algorithm == "" {
+	if config.Algorithm == 0 {
 		config.Algorithm = DefaultConfig.Algorithm
 	}
 

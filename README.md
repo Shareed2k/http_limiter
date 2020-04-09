@@ -1,6 +1,6 @@
 ## http_limiter is HTTP middleware for Go
 
-http_limiter using [redis](https://github.com/go-redis/redis) as store for rate limit with two algorithms for choosing simple, gcra [leaky bucket](https://en.wikipedia.org/wiki/Leaky_bucket)
+http_limiter using [redis](https://github.com/go-redis/redis) as store for rate limit with two algorithms for choosing sliding window, gcra [leaky bucket](https://en.wikipedia.org/wiki/Leaky_bucket)
 
 ### Install
 ```
